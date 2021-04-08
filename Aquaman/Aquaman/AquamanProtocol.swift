@@ -107,4 +107,11 @@ protocol AMPageControllerDelegate: class {
     /// - Parameter pageController: AquamanPageViewController
     func contentInsetFor(_ pageController: AquamanPageViewController) -> UIEdgeInsets
     
+    /// Any offset changes in pageController's mainScrollView
+    /// - Parameters:
+    ///   - pageController: AquamanPageViewController
+    ///   - scrollingView: mainScrollView or currentChildScrollView
+    ///   - contentOffset: mainScrollView contentOffset add currentChildScrollView contentOffset
+    func pageController(_ pageController: AquamanPageViewController, mainScrollViewDidScroll scrollingView: UIScrollView, contentOffset:CGPoint)
+    
 }

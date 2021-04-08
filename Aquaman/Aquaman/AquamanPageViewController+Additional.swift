@@ -111,6 +111,10 @@ extension AquamanPageViewController: UIScrollViewDelegate {
                     pageController(self, menuView: false)
                 }
             }
+            
+            let childScrollViewContentOffsetY = currentChildScrollView?.contentOffset.y ?? 0
+            let scrollingView = childScrollViewContentOffsetY > 0 ? (currentChildScrollView ?? scrollView) : scrollView
+            pageController(self, mainScrollViewDidScroll: scrollingView, contentOffset: CGPoint(x: 0.0, y: scrollView.contentOffset.y+childScrollViewContentOffsetY))
         } else {
             pageController(self, contentScrollViewDidScroll: scrollView)
             layoutChildViewControlls()

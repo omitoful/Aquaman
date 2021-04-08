@@ -480,6 +480,10 @@ open class AquamanPageViewController: UIViewController, AMPageControllerDataSour
     open func contentInsetFor(_ pageController: AquamanPageViewController) -> UIEdgeInsets {
         return .zero
     }
+    
+    open func pageController(_ pageController: AquamanPageViewController, mainScrollViewDidScroll scrollingView: UIScrollView, contentOffset:CGPoint) {
+        
+    }
 }
 
 
