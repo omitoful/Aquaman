@@ -36,6 +36,11 @@ protocol AMPageControllerDataSource: class {
     func menuViewHeightFor(_ pageController: AquamanPageViewController) -> CGFloat
     func menuViewPinHeightFor(_ pageController: AquamanPageViewController) -> CGFloat
     
+    /// Whether the menu is fixed at the top. Set true for the situation that don't need header. Should set headerViewHeight is 0.
+    /// Default is false
+    /// - Parameter pageController: AquamanPageViewController
+    func menuViewIsFixedAtTop(_ pageController: AquamanPageViewController) -> Bool
+    
     /// The index of the controller displayed by default. You should have menview ready before setting this value
     ///
     /// - Parameter pageController: AquamanPageViewController

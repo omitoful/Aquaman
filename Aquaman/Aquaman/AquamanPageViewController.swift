@@ -71,6 +71,7 @@ open class AquamanPageViewController: UIViewController, AMPageControllerDataSour
     private let headerContentView = UIView()
     private let menuContentView = UIView()
     private var menuViewHeight: CGFloat = 0.0
+    private var menuViewIsFixedAtTop: Bool = false
     internal var menuViewPinHeight: CGFloat = 0.0
     internal var sillValue: CGFloat = 0.0
     private var childControllerCount = 0
@@ -152,6 +153,7 @@ open class AquamanPageViewController: UIViewController, AMPageControllerDataSour
         
         menuViewHeight = menuViewHeightFor(self)
         menuViewPinHeight = menuViewPinHeightFor(self)
+        menuViewIsFixedAtTop = menuViewIsFixedAtTop(self)
         
         childControllerCount = numberOfViewControllers(in: self)
         
@@ -198,27 +200,48 @@ open class AquamanPageViewController: UIViewController, AMPageControllerDataSour
         
         let menuContentViewHeight = menuContentView.heightAnchor.constraint(equalToConstant: menuViewHeight)
         menuViewConstraint = menuContentViewHeight
-        NSLayoutConstraint.activate([
-            menuContentView.leadingAnchor.constraint(equalTo: mainScrollView.leadingAnchor),
-            menuContentView.trailingAnchor.constraint(equalTo: mainScrollView.trailingAnchor),
-            menuContentView.widthAnchor.constraint(equalTo: mainScrollView.widthAnchor),
-            menuContentView.topAnchor.constraint(equalTo: headerContentView.bottomAnchor),
-            menuContentViewHeight
-        ])
+        if menuViewIsFixedAtTop {
+            NSLayoutConstraint.activate([
+                menuContentView.leadingAnchor.constraint(equalTo: mainScrollView.leadingAnchor),
+                menuContentView.trailingAnchor.constraint(equalTo: mainScrollView.trailingAnchor),
+                menuContentView.widthAnchor.constraint(equalTo: mainScrollView.widthAnchor),
+                menuContentView.topAnchor.constraint(equalTo: view.topAnchor),
+                menuContentViewHeight
+            ])
+        } else {
+            NSLayoutConstraint.activate([
+                menuContentView.leadingAnchor.constraint(equalTo: mainScrollView.leadingAnchor),
+                menuContentView.trailingAnchor.constraint(equalTo: mainScrollView.trailingAnchor),
+                menuContentView.widthAnchor.constraint(equalTo: mainScrollView.widthAnchor),
+                menuContentView.topAnchor.constraint(equalTo: headerContentView.bottomAnchor),
+                menuContentViewHeight
+            ])
+        }
         
         
         mainScrollView.addSubview(contentScrollView)
         
         let contentScrollViewHeight = contentScrollView.heightAnchor.constraint(equalTo: mainScrollView.heightAnchor, constant: -menuViewHeight - menuViewPinHeight)
         contentScrollViewConstraint = contentScrollViewHeight
-        NSLayoutConstraint.activate([
-            contentScrollView.leadingAnchor.constraint(equalTo: mainScrollView.leadingAnchor),
-            contentScrollView.trailingAnchor.constraint(equalTo: mainScrollView.trailingAnchor),
-            contentScrollView.bottomAnchor.constraint(equalTo: mainScrollView.bottomAnchor),
-            contentScrollView.widthAnchor.constraint(equalTo: mainScrollView.widthAnchor),
-            contentScrollView.topAnchor.constraint(equalTo: menuContentView.bottomAnchor),
-            contentScrollViewHeight
+        if menuViewIsFixedAtTop {
+            NSLayoutConstraint.activate([
+                contentScrollView.leadingAnchor.constraint(equalTo: mainScrollView.leadingAnchor),
+                contentScrollView.trailingAnchor.constraint(equalTo: mainScrollView.trailingAnchor),
+                contentScrollView.bottomAnchor.constraint(equalTo: mainScrollView.bottomAnchor),
+                contentScrollView.widthAnchor.constraint(equalTo: mainScrollView.widthAnchor),
+                contentScrollView.topAnchor.constraint(equalTo: headerContentView.bottomAnchor, constant: menuViewHeight),
+                contentScrollViewHeight
             ])
+        } else {
+            NSLayoutConstraint.activate([
+                contentScrollView.leadingAnchor.constraint(equalTo: mainScrollView.leadingAnchor),
+                contentScrollView.trailingAnchor.constraint(equalTo: mainScrollView.trailingAnchor),
+                contentScrollView.bottomAnchor.constraint(equalTo: mainScrollView.bottomAnchor),
+                contentScrollView.widthAnchor.constraint(equalTo: mainScrollView.widthAnchor),
+                contentScrollView.topAnchor.constraint(equalTo: menuContentView.bottomAnchor),
+                contentScrollViewHeight
+            ])
+        }
         
         
         contentScrollView.addSubview(contentStackView)
@@ -483,6 +506,10 @@ open class AquamanPageViewController: UIViewController, AMPageControllerDataSour
     
     open func pageController(_ pageController: AquamanPageViewController, mainScrollViewDidScroll scrollingView: UIScrollView, contentOffset:CGPoint) {
         
+    }
+    
+    open func menuViewIsFixedAtTop(_ pageController: AquamanPageViewController) -> Bool {
+        return false
     }
 }
 
