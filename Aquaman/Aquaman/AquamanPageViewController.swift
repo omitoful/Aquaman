@@ -240,7 +240,7 @@ open class AquamanPageViewController: UIViewController, AMPageControllerDataSour
                 contentScrollView.trailingAnchor.constraint(equalTo: mainScrollView.trailingAnchor),
                 contentScrollView.bottomAnchor.constraint(equalTo: mainScrollView.bottomAnchor),
                 contentScrollView.widthAnchor.constraint(equalTo: mainScrollView.widthAnchor),
-                contentScrollView.topAnchor.constraint(equalTo: menuContentView.bottomAnchor, constant: -segmentAndContentViewShiftToTopValue),
+                contentScrollView.topAnchor.constraint(equalTo: menuContentView.bottomAnchor),
                 contentScrollViewHeight
             ])
         }
