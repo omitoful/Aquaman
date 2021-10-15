@@ -215,7 +215,7 @@ open class AquamanPageViewController: UIViewController, AMPageControllerDataSour
                 menuContentView.leadingAnchor.constraint(equalTo: mainScrollView.leadingAnchor),
                 menuContentView.trailingAnchor.constraint(equalTo: mainScrollView.trailingAnchor),
                 menuContentView.widthAnchor.constraint(equalTo: mainScrollView.widthAnchor),
-                menuContentView.topAnchor.constraint(equalTo: headerContentView.bottomAnchor, constant: -segmentAndContentViewShiftToTopValue),
+                menuContentView.topAnchor.constraint(equalTo: headerContentView.bottomAnchor, constant: CGFloat(-segmentAndContentViewShiftToTopValue)),
                 menuContentViewHeight
             ])
         }
@@ -223,7 +223,7 @@ open class AquamanPageViewController: UIViewController, AMPageControllerDataSour
         
         mainScrollView.addSubview(contentScrollView)
         
-        let contentScrollViewHeight = contentScrollView.heightAnchor.constraint(equalTo: mainScrollView.heightAnchor, constant: -menuViewHeight - menuViewPinHeight + (segmentAndContentViewShiftToTopValue * 2))
+        let contentScrollViewHeight = contentScrollView.heightAnchor.constraint(equalTo: mainScrollView.heightAnchor, constant: -menuViewHeight - menuViewPinHeight + CGFloat(segmentAndContentViewShiftToTopValue * 2))
         contentScrollViewConstraint = contentScrollViewHeight
         if menuViewIsFixedAtTop {
             NSLayoutConstraint.activate([
@@ -514,7 +514,7 @@ open class AquamanPageViewController: UIViewController, AMPageControllerDataSour
         return false
     }
     
-    open func segmentAndContentViewShiftToTop(_ pageController: AquamanPageViewController) -> CGFloat {
+    open func segmentAndContentViewShiftToTop(_ pageController: AquamanPageViewController) -> Double {
         return 0
     }
 }
