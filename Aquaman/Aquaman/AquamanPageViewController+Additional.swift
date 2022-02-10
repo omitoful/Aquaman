@@ -102,6 +102,10 @@ extension AquamanPageViewController: UIScrollViewDelegate {
                 currentChildScrollView?.am_isCanScroll = true
                 scrollView.am_isCanScroll = false
                 pageController(self, menuView: !scrollView.am_isCanScroll)
+                
+                if currentChildScrollView?.contentOffset.y == 0 {
+                    scrollView.am_isCanScroll = true
+                }
             } else {
                 
                 if scrollView.am_isCanScroll == false {
