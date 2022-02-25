@@ -155,9 +155,9 @@ extension AquamanPageViewController: UIScrollViewDelegate {
     }
     
     public func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
-        guard scrollView == mainScrollView else {
-            return false
-        }
+//        guard scrollView == mainScrollView else {
+//            return false
+//        }
         currentChildScrollView?.setContentOffset(currentChildScrollView?.am_originOffset ?? .zero, animated: true)
         return true
     }
