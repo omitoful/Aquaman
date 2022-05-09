@@ -102,6 +102,10 @@ extension AquamanPageViewController: UIScrollViewDelegate {
                 currentChildScrollView?.am_isCanScroll = true
                 scrollView.am_isCanScroll = false
                 pageController(self, menuView: !scrollView.am_isCanScroll)
+                
+                if currentChildScrollView?.contentOffset.y == 0 {
+                    scrollView.am_isCanScroll = true
+                }
             } else {
                 
                 if scrollView.am_isCanScroll == false {
@@ -111,6 +115,10 @@ extension AquamanPageViewController: UIScrollViewDelegate {
                     pageController(self, menuView: false)
                 }
             }
+            
+            let childScrollViewContentOffsetY = currentChildScrollView?.contentOffset.y ?? 0
+            let scrollingView = childScrollViewContentOffsetY > 0 ? (currentChildScrollView ?? scrollView) : scrollView
+            pageController(self, mainScrollViewDidScroll: scrollingView, contentOffset: CGPoint(x: 0.0, y: scrollView.contentOffset.y+childScrollViewContentOffsetY))
         } else {
             pageController(self, contentScrollViewDidScroll: scrollView)
             layoutChildViewControlls()
@@ -147,9 +155,9 @@ extension AquamanPageViewController: UIScrollViewDelegate {
     }
     
     public func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
-        guard scrollView == mainScrollView else {
-            return false
-        }
+//        guard scrollView == mainScrollView else {
+//            return false
+//        }
         currentChildScrollView?.setContentOffset(currentChildScrollView?.am_originOffset ?? .zero, animated: true)
         return true
     }
@@ -159,11 +167,15 @@ extension AquamanPageViewController: UIScrollViewDelegate {
 extension AquamanPageViewController {
     internal func childScrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.am_isCanScroll == false {
-            scrollView.contentOffset = scrollView.am_originOffset ?? .zero
+            DispatchQueue.main.async {
+                scrollView.contentOffset = .zero
+            }
         }
         let offsetY = scrollView.contentOffset.y
         if offsetY <= (scrollView.am_originOffset ?? .zero).y {
-            scrollView.contentOffset = scrollView.am_originOffset ?? .zero
+            DispatchQueue.main.async {
+                scrollView.contentOffset = scrollView.am_originOffset ?? .zero
+            }
             scrollView.am_isCanScroll = false
             mainScrollView.am_isCanScroll = true
         }
